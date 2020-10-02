@@ -1,0 +1,43 @@
+#main-container {
+    margin: auto;
+    width: 50%;
+    height: auto;
+}
+
+#main-header {
+    margin: 0 0 0 0;
+}
+
+#main-content-container {
+    width: 70%;
+}
+
+#new-book-button {
+    background-color: #507dbc;
+    padding: 10px;
+    margin: 5% 0 5% 0;
+    color: #dae3e5;
+}
+
+#book-list-container {
+    float: left;
+}
+
+#book-list-controls {
+}
+
+#new-book-form {
+    margin-left: 55%;
+    padding: 10px;
+    border: solid;
+    border-color: #a1c6ea;
+}
+
+#book-list {
+    margin-left: 0;
+    margin-right: 15%;
+}
+
+#book-list-item {
+    margin-bottom: 10px;
+}
