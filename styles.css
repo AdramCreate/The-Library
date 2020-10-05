@@ -19,6 +19,13 @@
     color: #dae3e5;
 }
 
+#cancel-new-book-button {
+    background-color: #ec2929;
+    padding: 10px;
+    margin: 5% 0 5% 0;
+    color: #dae3e5;
+}
+
 #book-list-container {
     float: left;
 }

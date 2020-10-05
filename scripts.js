@@ -65,6 +65,23 @@ function addNewBookToLibrary(event) {
     );
 
     addBookListElement(newBook);
+    resetNewBookForm();
+}
+
+function resetNewBookForm() {
+    document.getElementById('title-input').value = '';
+    document.getElementById('author-input').value = '';
+    document.getElementById('number-of-pages-input').value = '';
+    document.querySelector('input[name=read]').checked = false;
+    document.getElementById('new-book-form').style.display = 'none';
+    document.getElementById('cancel-new-book-button').style.display = 'none';
+    document.getElementById('new-book-button').style.display = 'block';
+}
+
+function showNewBookForm() {
+    document.getElementById('new-book-form').style.display = 'block';
+    document.getElementById('cancel-new-book-button').style.display = 'block';
+    document.getElementById('new-book-button').style.display = 'none';
 }
 
 getBooksInLibrary();
@@ -72,3 +89,11 @@ getBooksInLibrary();
 document
     .getElementById('submit-button')
     .addEventListener('click', addNewBookToLibrary);
+
+document
+    .getElementById('new-book-button')
+    .addEventListener('click', showNewBookForm);
+
+document
+    .getElementById('cancel-new-book-button')
+    .addEventListener('click', resetNewBookForm);
