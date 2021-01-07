@@ -1,5 +1,7 @@
 let myLibrary = [];
 
+let libraryIndex = 0;
+
 let bookListElement = document.getElementById('book-list');
 
 myLibrary.push(new Book('Cat and Hat', 'Dr. Seuss', 11, true));
@@ -8,22 +10,15 @@ myLibrary.push(
 );
 myLibrary.push(new Book('Potato', 'Chef Boyardee Pepporini IV', 293, false));
 
-function Book(title, author, pages, read) {
-    (this.title = title),
-        (this.author = author),
-        (this.pages = pages),
-        (this.read = read),
-        (this.info = function () {
-            return (
-                title +
-                ' by ' +
-                author +
-                ', ' +
-                pages +
-                ' pages, ' +
-                (read ? 'read' : 'not read yet')
-            );
-        });
+function Book(title, author, numberOfPages, hasReadBook) {
+    this.title = title;
+    this.author = author;
+    this.numberOfPages = numberOfPages;
+    this.hasReadBook = hasReadBook;
+    this.info = () =>
+        `${this.title} by ${this.author}, ${this.numberOfPages} pages, ${
+            this.hasReadBook ? 'is read' : 'has not read'
+        }`;
 }
 
 function getBooksInLibrary() {
@@ -32,18 +27,40 @@ function getBooksInLibrary() {
     }
 }
 
-function getBookListItemElement(book) {
+function getBookListItemControls(libraryIndex) {
     return (
-        '<li id="book-list-item"><em>' +
+        '<div id="book-list-item-controls">' +
+        '<button id="delete-book-button" data-library-index="' +
+        libraryIndex +
+        '>X</button>' +
+        '</div>'
+    );
+}
+
+// function getRemoveBookButton() {
+//     let button = document.createElement('button');
+//     button.textContent = 'X';
+// }
+
+function getBookListItemElement(book) {
+    let newBookListItemElement =
+        '<li id="book-list-item" ' +
+        'data-library-index=' +
+        libraryIndex +
+        '><em>' +
         book.title +
         '</em><br>by: ' +
         book.author +
         '<br>Page Count: ' +
-        book.pages +
+        book.numberOfPages +
         ' pages<br>' +
         getIsReadContent(book.read) +
-        '</li>'
-    );
+        getBookListItemControls(libraryIndex) +
+        '</li>';
+
+    libraryIndex++;
+
+    return newBookListItemElement;
 }
 
 function getIsReadContent(isRead) {
