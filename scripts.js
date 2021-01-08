@@ -2,7 +2,7 @@ let myLibrary = [];
 
 let libraryIndex = 0;
 
-let bookListElement = document.getElementById('book-list');
+const bookListElement = document.getElementById('book-list');
 
 myLibrary.push(new Book('Cat and Hat', 'Dr. Seuss', 11, true));
 myLibrary.push(
@@ -10,14 +10,14 @@ myLibrary.push(
 );
 myLibrary.push(new Book('Potato', 'Chef Boyardee Pepporini IV', 293, false));
 
-function Book(title, author, numberOfPages, hasReadBook) {
+function Book(title, author, pageCount, hasRead) {
     this.title = title;
     this.author = author;
-    this.numberOfPages = numberOfPages;
-    this.hasReadBook = hasReadBook;
+    this.pageCount = pageCount;
+    this.hasRead = hasRead;
     this.info = () =>
-        `${this.title} by ${this.author}, ${this.numberOfPages} pages, ${
-            this.hasReadBook ? 'is read' : 'has not read'
+        `${this.title} by ${this.author}, ${this.pageCount} pages, ${
+            this.hasRead ? 'is read' : 'has not read'
         }`;
 }
 
@@ -27,48 +27,65 @@ function getBooksInLibrary() {
     }
 }
 
-function getBookListItemControls(libraryIndex) {
-    return (
-        '<div id="book-list-item-controls">' +
-        '<button id="delete-book-button" data-library-index="' +
-        libraryIndex +
-        '>X</button>' +
-        '</div>'
-    );
+function getBookListItemControls() {
+    const newBookListItemControlsElement = document.createElement('div');
+    newBookListItemControlsElement.classList.add('book-list-item-controls');
+    newBookListItemControlsElement.appendChild(getRemoveBookButton());
+
+    return newBookListItemControlsElement;
 }
 
-// function getRemoveBookButton() {
-//     let button = document.createElement('button');
-//     button.textContent = 'X';
-// }
+function getRemoveBookButton() {
+    const newRemoveButton = document.createElement('button');
+
+    newRemoveButton.textContent = 'X';
+    newRemoveButton.classList.add('delete-book-button');
+    newRemoveButton.setAttribute('data-library-index', libraryIndex);
+
+    return newRemoveButton;
+}
 
 function getBookListItemElement(book) {
-    let newBookListItemElement =
-        '<li id="book-list-item" ' +
-        'data-library-index=' +
-        libraryIndex +
-        '><em>' +
-        book.title +
-        '</em><br>by: ' +
-        book.author +
-        '<br>Page Count: ' +
-        book.numberOfPages +
-        ' pages<br>' +
-        getIsReadContent(book.read) +
-        getBookListItemControls(libraryIndex) +
-        '</li>';
+    const newBookListItemElement = document.createElement('li');
 
+    newBookListItemElement.classList.add('book-list-item');
+    newBookListItemElement.setAttribute('data-library-index', libraryIndex);
+    newBookListItemElement.appendChild(getBookTitleElement(book.title));
+    newBookListItemElement.appendChild(getBookPageCountElement(book.pageCount));
+    newBookListItemElement.appendChild(getBookHasReadElement(book.hasRead));
+    newBookListItemElement.appendChild(getBookListItemControls());
     libraryIndex++;
 
     return newBookListItemElement;
 }
 
-function getIsReadContent(isRead) {
-    return 'Read? <strong>' + (isRead ? 'Yes' : 'No') + '</strong>';
-}
+const getBookTitleElement = (title) => {
+    const newBookTitleElement = document.createElement('div');
+    newBookTitleElement.innerHTML = `<em>${title}</em>`;
+
+    return newBookTitleElement;
+};
+
+const getBookPageCountElement = (pageCount) => {
+    const newBookPageCountElement = document.createElement('div');
+    newBookPageCountElement.classList.add('page-count');
+    newBookPageCountElement.textContent = `Page Count: ${pageCount}`;
+
+    return newBookPageCountElement;
+};
+
+const getBookHasReadElement = (hasRead) => {
+    const newBookHasReadElement = document.createElement('div');
+
+    newBookHasReadElement.innerHTML = `Read? <strong>${
+        hasRead ? 'Yes' : 'No'
+    }</strong>`;
+
+    return newBookHasReadElement;
+};
 
 function addBookListElement(book) {
-    bookListElement.innerHTML += getBookListItemElement(book);
+    bookListElement.appendChild(getBookListItemElement(book));
 }
 
 function addNewBookToLibrary(event) {
