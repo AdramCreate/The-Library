@@ -10,32 +10,35 @@ myLibrary.push(
 );
 myLibrary.push(new Book('Potato', 'Chef Boyardee Pepporini IV', 293, false));
 
-function Book(title, author, pageCount, hasRead) {
-    this.title = title;
-    this.author = author;
-    this.pageCount = pageCount;
-    this.hasRead = hasRead;
-    this.info = () =>
-        `${this.title} by ${this.author}, ${this.pageCount} pages, ${
-            this.hasRead ? 'is read' : 'has not read'
-        }`;
-}
-
-function getBooksInLibrary() {
-    for (let book of myLibrary) {
-        addBookListElement(book);
+class Book {
+    constructor(title, author, pageCount, hasRead) {
+        this.title = title;
+        this.author = author;
+        this.pageCount = pageCount;
+        this.hasRead = hasRead;
     }
 }
 
-function getBookListItemControls() {
+Book.prototype.info = () =>
+    `${this.title} by ${this.author}, ${this.pageCount} pages, ${
+        this.hasRead ? 'is read' : 'has not read'
+    }`;
+
+const getBooksInLibrary = () => {
+    for (let book of myLibrary) {
+        addBookListElement(book);
+    }
+};
+
+const getBookListItemControls = () => {
     const newBookListItemControlsElement = document.createElement('div');
     newBookListItemControlsElement.classList.add('book-list-item-controls');
     newBookListItemControlsElement.appendChild(getRemoveBookButton());
 
     return newBookListItemControlsElement;
-}
+};
 
-function getRemoveBookButton() {
+const getRemoveBookButton = () => {
     const newRemoveButton = document.createElement('button');
 
     newRemoveButton.textContent = 'X';
@@ -43,9 +46,9 @@ function getRemoveBookButton() {
     newRemoveButton.setAttribute('data-library-index', libraryIndex);
 
     return newRemoveButton;
-}
+};
 
-function getBookListItemElement(book) {
+const getBookListItemElement = (book) => {
     const newBookListItemElement = document.createElement('li');
 
     newBookListItemElement.classList.add('book-list-item');
@@ -57,7 +60,7 @@ function getBookListItemElement(book) {
     libraryIndex++;
 
     return newBookListItemElement;
-}
+};
 
 const getBookTitleElement = (title) => {
     const newBookTitleElement = document.createElement('div');
@@ -84,11 +87,11 @@ const getBookHasReadElement = (hasRead) => {
     return newBookHasReadElement;
 };
 
-function addBookListElement(book) {
+const addBookListElement = (book) => {
     bookListElement.appendChild(getBookListItemElement(book));
-}
+};
 
-function addNewBookToLibrary(event) {
+const addNewBookToLibrary = (event) => {
     event.preventDefault();
 
     let newBook = new Book(
@@ -100,9 +103,9 @@ function addNewBookToLibrary(event) {
 
     addBookListElement(newBook);
     resetNewBookForm();
-}
+};
 
-function resetNewBookForm() {
+const resetNewBookForm = () => {
     document.getElementById('title-input').value = '';
     document.getElementById('author-input').value = '';
     document.getElementById('number-of-pages-input').value = '';
@@ -110,13 +113,13 @@ function resetNewBookForm() {
     document.getElementById('new-book-form').style.display = 'none';
     document.getElementById('cancel-new-book-button').style.display = 'none';
     document.getElementById('new-book-button').style.display = 'block';
-}
+};
 
-function showNewBookForm() {
+const showNewBookForm = () => {
     document.getElementById('new-book-form').style.display = 'block';
     document.getElementById('cancel-new-book-button').style.display = 'block';
     document.getElementById('new-book-button').style.display = 'none';
-}
+};
 
 getBooksInLibrary();
 
