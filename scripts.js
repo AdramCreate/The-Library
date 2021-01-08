@@ -4,12 +4,6 @@ let libraryIndex = 0;
 
 const bookListElement = document.getElementById('book-list');
 
-myLibrary.push(new Book('Cat and Hat', 'Dr. Seuss', 11, true));
-myLibrary.push(
-    new Book('Legend of Dick Dastardly', 'Cornelias Snake', 1060, false)
-);
-myLibrary.push(new Book('Potato', 'Chef Boyardee Pepporini IV', 293, false));
-
 class Book {
     constructor(title, author, pageCount, hasRead) {
         this.title = title;
@@ -120,6 +114,12 @@ const showNewBookForm = () => {
     document.getElementById('cancel-new-book-button').style.display = 'block';
     document.getElementById('new-book-button').style.display = 'none';
 };
+
+myLibrary.push(new Book('Cat and Hat', 'Dr. Seuss', 11, true));
+myLibrary.push(
+    new Book('Legend of Dick Dastardly', 'Cornelias Snake', 1060, false)
+);
+myLibrary.push(new Book('Potato', 'Chef Boyardee Pepporini IV', 293, false));
 
 getBooksInLibrary();
 
