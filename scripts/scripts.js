@@ -38,6 +38,7 @@ const getRemoveBookButton = () => {
     newRemoveButton.textContent = 'X';
     newRemoveButton.classList.add('delete-book-button');
     newRemoveButton.setAttribute('data-library-index', libraryIndex);
+    newRemoveButton.addEventListener('click', removeBookOnClick);
 
     return newRemoveButton;
 };
@@ -113,6 +114,18 @@ const showNewBookForm = () => {
     document.getElementById('new-book-form').style.display = 'block';
     document.getElementById('cancel-new-book-button').style.display = 'block';
     document.getElementById('new-book-button').style.display = 'none';
+};
+
+const removeBookOnClick = (e) => {
+    const currentButtonElement = e.target;
+
+    document
+        .querySelector(
+            `[data-library-index="${currentButtonElement.getAttribute(
+                'data-library-index'
+            )}"]`
+        )
+        .remove();
 };
 
 myLibrary.push(new Book('Cat and Hat', 'Dr. Seuss', 11, true));
