@@ -5,7 +5,7 @@ let libraryIndex = 0;
 const bookListElement = document.getElementById('book-list');
 
 class Book {
-    constructor(title, author, pageCount, hasRead) {
+    constructor(title, author, pageCount, hasRead = false) {
         this.title = title;
         this.author = author;
         this.pageCount = pageCount;
@@ -18,6 +18,10 @@ Book.prototype.info = () =>
         this.hasRead ? 'is read' : 'has not read'
     }`;
 
+// Book.prototype.toggleHadRead = () => {
+//     this.hasRead = !this.hasRead;
+// };
+
 const getBooksInLibrary = () => {
     for (let book of myLibrary) {
         addBookListElement(book);
@@ -28,6 +32,7 @@ const getBookListItemControls = () => {
     const newBookListItemControlsElement = document.createElement('div');
     newBookListItemControlsElement.classList.add('book-list-item-controls');
     newBookListItemControlsElement.appendChild(getRemoveBookButton());
+    // newBookListItemControlsElement.appendChild(getToggleHadReadButton());
 
     return newBookListItemControlsElement;
 };
@@ -42,6 +47,17 @@ const getRemoveBookButton = () => {
 
     return newRemoveButton;
 };
+
+// const getToggleHadReadButton = () => {
+//     const newToggleHadReadButton = document.createElement('button');
+
+//     newToggleHadReadButton.textContent = 'Toggle Read Status';
+//     // newToggleHadReadButton.classList.add('toggle-read-status-button');
+//     // newToggleHadReadButton.setAttribute('data-library-index', libraryIndex);
+//     // newToggleHadReadButton.addEventListener('click', removeBookOnClick);
+
+//     return newToggleHadReadButton;
+// };
 
 const getBookListItemElement = (book) => {
     const newBookListItemElement = document.createElement('li');
@@ -118,14 +134,16 @@ const showNewBookForm = () => {
 
 const removeBookOnClick = (e) => {
     const currentButtonElement = e.target;
+    const bookIndex = currentButtonElement.getAttribute('data-library-index');
 
-    document
-        .querySelector(
-            `[data-library-index="${currentButtonElement.getAttribute(
-                'data-library-index'
-            )}"]`
-        )
-        .remove();
+    document.querySelector(`[data-library-index="${bookIndex}"]`).remove();
+
+    let newLibrary = [
+        ...myLibrary.slice(0, bookIndex),
+        ...myLibrary.slice(bookIndex + 1),
+    ];
+
+    myLibrary = newLibrary;
 };
 
 myLibrary.push(new Book('Cat and Hat', 'Dr. Seuss', 11, true));
