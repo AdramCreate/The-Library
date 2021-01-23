@@ -18,6 +18,7 @@ Book.prototype.info = () =>
         this.hasRead ? 'is read' : 'has not read'
     }`;
 
+// TODO: Finish
 // Book.prototype.toggleHadRead = () => {
 //     this.hasRead = !this.hasRead;
 // };
@@ -32,6 +33,7 @@ const getBookListItemControls = () => {
     const newBookListItemControlsElement = document.createElement('div');
     newBookListItemControlsElement.classList.add('book-list-item-controls');
     newBookListItemControlsElement.appendChild(getRemoveBookButton());
+    // TODO: Finish
     // newBookListItemControlsElement.appendChild(getToggleHadReadButton());
 
     return newBookListItemControlsElement;
@@ -43,18 +45,21 @@ const getRemoveBookButton = () => {
     newRemoveButton.textContent = 'X';
     newRemoveButton.classList.add('delete-book-button');
     newRemoveButton.setAttribute('data-library-index', libraryIndex);
-    newRemoveButton.addEventListener('click', removeBookOnClick);
+    newRemoveButton.addEventListener('click', (event) => {
+        removeBookOnClick(event.target);
+    });
 
     return newRemoveButton;
 };
 
+// TODO: Finish
 // const getToggleHadReadButton = () => {
 //     const newToggleHadReadButton = document.createElement('button');
 
 //     newToggleHadReadButton.textContent = 'Toggle Read Status';
-//     // newToggleHadReadButton.classList.add('toggle-read-status-button');
-//     // newToggleHadReadButton.setAttribute('data-library-index', libraryIndex);
-//     // newToggleHadReadButton.addEventListener('click', removeBookOnClick);
+//     newToggleHadReadButton.classList.add('toggle-read-status-button');
+//     newToggleHadReadButton.setAttribute('data-library-index', libraryIndex);
+//     newToggleHadReadButton.addEventListener('click', removeBookOnClick);
 
 //     return newToggleHadReadButton;
 // };
@@ -102,9 +107,7 @@ const addBookListElement = (book) => {
     bookListElement.appendChild(getBookListItemElement(book));
 };
 
-const addNewBookToLibrary = (event) => {
-    event.preventDefault();
-
+const addNewBookToLibrary = () => {
     let newBook = new Book(
         document.getElementById('title-input').value,
         document.getElementById('author-input').value,
@@ -132,9 +135,8 @@ const showNewBookForm = () => {
     document.getElementById('new-book-button').style.display = 'none';
 };
 
-const removeBookOnClick = (e) => {
-    const currentButtonElement = e.target;
-    const bookIndex = currentButtonElement.getAttribute('data-library-index');
+const removeBookOnClick = (bookElement) => {
+    const bookIndex = bookElement.getAttribute('data-library-index');
 
     document.querySelector(`[data-library-index="${bookIndex}"]`).remove();
 
@@ -154,9 +156,10 @@ myLibrary.push(new Book('Potato', 'Chef Boyardee Pepporini IV', 293, false));
 
 getBooksInLibrary();
 
-document
-    .getElementById('submit-button')
-    .addEventListener('click', addNewBookToLibrary);
+document.getElementById('submit-button').addEventListener('click', (event) => {
+    event.preventDefault();
+    addNewBookToLibrary();
+});
 
 document
     .getElementById('new-book-button')
